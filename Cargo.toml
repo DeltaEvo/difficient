@@ -28,6 +28,11 @@ thiserror = "1.0"
 uuid = { version = "1.11", optional = true }
 
 [features]
+default = ["map"]
+
+# impl Diffable on `std::collections::BTreeMap` and `std::collections::HashMap`
+map = []
+
 # impl Diffable on `chrono::DateTime`
 chrono = ["dep:chrono"]
 

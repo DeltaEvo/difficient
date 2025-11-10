@@ -1,10 +1,11 @@
 #![doc = include_str!("../README.md")]
 
+use std::{marker::PhantomData, ops::Deref};
+
+#[cfg(feature = "map")]
 use std::{
     collections::{BTreeMap, HashMap},
     hash::Hash,
-    marker::PhantomData,
-    ops::Deref,
 };
 
 pub use difficient_macros::Diffable;
@@ -234,6 +235,7 @@ where
 
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+#[cfg(feature = "map")]
 /// A generic type which represents the possible change-states of a Key-Value type
 /// (e.g. `HashMap`, `BTreeMap`)
 pub enum KvDiff<'a, T, U> {
@@ -270,6 +272,7 @@ impl_diffable_for_primitives! {
     String
 }
 
+#[cfg(feature = "map")]
 macro_rules! kv_map_impl {
     ($typ: ident, $bounds: ident) => {
         #[allow(
@@ -357,7 +360,10 @@ macro_rules! kv_map_impl {
     };
 }
 
+#[cfg(feature = "map")]
 kv_map_impl!(HashMap, Hash);
+
+#[cfg(feature = "map")]
 kv_map_impl!(BTreeMap, Ord);
 
 impl Diffable<'_> for () {

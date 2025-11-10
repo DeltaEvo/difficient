@@ -4,7 +4,9 @@ use std::{
     hash::Hash,
 };
 
-use super::{AtomicDiff, DeepDiff, Id, KvDiff, Replace};
+use super::{AtomicDiff, DeepDiff, Id, Replace};
+#[cfg(feature = "map")]
+use super::KvDiff;
 use crate::PatchOnlyDiff;
 
 /// A trait that allows the user to extract information from a 'diff' type.
@@ -160,6 +162,7 @@ tuple_impl!(A 0, B 1, C 2);
 tuple_impl!(A 0, B 1);
 tuple_impl!(A 0);
 
+#[cfg(feature = "map")]
 macro_rules! kv_map_impl {
     ($typ: ident, $bounds: ident) => {
         #[allow(
@@ -196,7 +199,9 @@ macro_rules! kv_map_impl {
     };
 }
 
+#[cfg(feature = "map")]
 kv_map_impl!(HashMap, Hash);
+#[cfg(feature = "map")]
 kv_map_impl!(BTreeMap, Ord);
 
 #[cfg(test)]
