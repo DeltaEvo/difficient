@@ -515,12 +515,17 @@ pub mod tests {
 
     // ** Test structs
 
+    #[cfg(feature = "map")]
+    type Child2Map = HashMap<i32, Child2>;
+    #[cfg(not(feature = "map"))]
+    type Child2Map = ();
+
     #[derive(Debug, Clone, PartialEq)]
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     pub struct Parent {
         pub c1: Child1,
         pub c2: Vec<Child1>,
-        pub c3: HashMap<i32, Child2>,
+        pub c3: Child2Map,
         pub val: String,
     }
 
@@ -571,7 +576,7 @@ pub mod tests {
     pub struct ParentDiff<'a> {
         pub c1: <Child1 as Diffable<'a>>::Diff,
         pub c2: <Vec<Child1> as Diffable<'a>>::Diff,
-        pub c3: <HashMap<i32, Child2> as Diffable<'a>>::Diff,
+        pub c3: <Child2Map as Diffable<'a>>::Diff,
         pub val: <String as Diffable<'a>>::Diff,
     }
 
@@ -708,6 +713,7 @@ pub mod tests {
 
     #[test]
     fn smoke_test() {
+        #[cfg(feature = "map")]
         fn dummy_child2() -> Child2 {
             Child2 {
                 a: "ayeaye".into(),
@@ -728,6 +734,7 @@ pub mod tests {
                 x: 234,
                 y: "yazoo".into(),
             }],
+            #[cfg(feature = "map")]
             c3: [(
                 321,
                 Child2 {
@@ -738,6 +745,8 @@ pub mod tests {
             )]
             .into_iter()
             .collect(),
+            #[cfg(not(feature = "map"))]
+            c3: (),
             val: "hello".into(),
         };
 
@@ -760,7 +769,10 @@ pub mod tests {
             let expect = DeepDiff::Patched(ParentDiff {
                 c1: DeepDiff::Unchanged,
                 c2: VecDiff::Unchanged,
+                #[cfg(feature = "map")]
                 c3: DeepDiff::Unchanged,
+                #[cfg(not(feature = "map"))]
+                c3: Id::new(),
                 val: AtomicDiff::Replaced(&mello),
             });
             assert_eq!(diff, expect);
@@ -768,6 +780,7 @@ pub mod tests {
             assert_eq!(p3, p4);
         }
 
+        #[cfg(feature = "map")]
         {
             let mut p5 = base.clone();
             let dummy = dummy_child2();
@@ -789,6 +802,7 @@ pub mod tests {
             assert_eq!(err, [ApplyError::MissingKey, ApplyError::UnexpectedKey]);
         }
 
+        #[cfg(feature = "map")]
         {
             let mut map1 = BTreeMap::new();
             let map2 = BTreeMap::from([("hello", "world")]);

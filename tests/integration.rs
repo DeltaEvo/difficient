@@ -78,6 +78,7 @@ struct SingleFieldC {
     reason = "We are specifically testing this behavior"
 )]
 mod just_check_they_compile {
+    #[cfg(feature = "map")]
     use std::collections::{BTreeMap, HashMap};
 
     use crate::{NotDiffable, SimpleStruct};
@@ -120,6 +121,7 @@ mod just_check_they_compile {
     }
 
     #[derive(difficient::Diffable, PartialEq, Debug, Clone)]
+    #[cfg(feature = "map")]
     struct HasHashMap {
         map1: HashMap<i32, i32>,
         map2: BTreeMap<i32, i32>,

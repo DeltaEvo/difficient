@@ -1,3 +1,4 @@
+#[cfg(feature = "map")]
 use std::{
     cmp::Ord,
     collections::{BTreeMap, HashMap},
@@ -420,7 +421,10 @@ pub mod tests {
                     y: "y2".into(),
                 },
             ],
+            #[cfg(feature = "map")]
             c3: HashMap::new(),
+            #[cfg(not(feature = "map"))]
+            c3: (),
             val: "val".into(),
         };
 
@@ -452,6 +456,7 @@ pub mod tests {
     }
 
     #[test]
+    #[cfg(feature = "map")]
     fn test_kv_visitor() {
         let map1: BTreeMap<_, _> = [("x", 123), ("y", 234)].into_iter().collect();
         let map2: BTreeMap<_, _> = [("x", 321), ("y", 234), ("z", 345)].into_iter().collect();
