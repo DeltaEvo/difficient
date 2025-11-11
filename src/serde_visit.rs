@@ -4,9 +4,9 @@ use std::{
     hash::Hash,
 };
 
-use super::{AtomicDiff, DeepDiff, Id, Replace};
 #[cfg(feature = "map")]
 use super::KvDiff;
+use super::{AtomicDiff, DeepDiff, Id, Replace};
 use crate::PatchOnlyDiff;
 
 /// A trait that allows the user to extract information from a 'diff' type.

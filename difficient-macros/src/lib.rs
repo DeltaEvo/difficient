@@ -1027,7 +1027,7 @@ mod tests {
             let f: syn::File = syn::parse2(expect).unwrap();
             prettyplease::unparse(&f)
         };
-        pretty_assertions::assert_eq!(pretty.to_string(), expect.to_string());
+        pretty_assertions::assert_eq!(pretty.clone(), expect.clone());
     }
 
     #[test]
@@ -1116,7 +1116,7 @@ mod tests {
             let f: syn::File = syn::parse2(expect).unwrap();
             prettyplease::unparse(&f)
         };
-        pretty_assertions::assert_eq!(pretty.to_string(), expect.to_string());
+        pretty_assertions::assert_eq!(pretty.clone(), expect.clone());
     }
 
     #[test]
@@ -1191,7 +1191,7 @@ mod tests {
             let f: syn::File = syn::parse2(expect).unwrap();
             prettyplease::unparse(&f)
         };
-        pretty_assertions::assert_eq!(pretty.to_string(), expect.to_string());
+        pretty_assertions::assert_eq!(pretty.clone(), expect.clone());
     }
 
     #[test]
@@ -1369,7 +1369,7 @@ mod tests {
             let f: syn::File = syn::parse2(expect).unwrap();
             prettyplease::unparse(&f)
         };
-        pretty_assertions::assert_eq!(pretty.to_string(), expect.to_string());
+        pretty_assertions::assert_eq!(pretty.clone(), expect.clone());
     }
 
     #[test]
@@ -1522,7 +1522,7 @@ mod tests {
             let f: syn::File = syn::parse2(expect).unwrap();
             prettyplease::unparse(&f)
         };
-        pretty_assertions::assert_eq!(pretty.to_string(), expect.to_string());
+        pretty_assertions::assert_eq!(pretty.clone(), expect.clone());
     }
 
     #[test]
@@ -1557,7 +1557,7 @@ mod tests {
             let f: syn::File = syn::parse2(expect).unwrap();
             prettyplease::unparse(&f)
         };
-        pretty_assertions::assert_eq!(pretty.to_string(), expect.to_string());
+        pretty_assertions::assert_eq!(pretty.clone(), expect.clone());
     }
 
     #[test]
